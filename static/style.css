@@ -89,5 +89,17 @@ h2, p {
 	border: none;
 	height: 48px;
 	width: 100%;
-	margin: .25rem auto;
+	margin: .5rem auto;
+	font-size: 1rem;
+}
+
+@media only screen and (min-width: 1024px) {
+	
+	p {
+		width: 600px;
+	}
+	
+	.form {
+		width: 600px;
+	}
 }
