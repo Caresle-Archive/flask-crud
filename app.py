@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, make_response
 from werkzeug.utils import redirect
 from pymongo import MongoClient
 
@@ -17,13 +17,18 @@ def index():
 @app.route("/list", methods=["GET"])
 def get_list():
 	url_for("static", filename="style.css")
+	
+	username = request.cookies.get("username")
+	
 	friend_list = db.friend_list
 	friends_number = friend_list.count()
+	
 	if friends_number > 0:
 		friends = list(friend_list.find({}))
-		print(friends)
-		return render_template("list.html", friends=friends)
-	return render_template("list.html")
+		return render_template(
+			"list.html", friends=friends, username=username
+			)
+	return render_template("list.html", username=username)
 
 
 @app.route("/list", methods=["POST"])
@@ -55,6 +60,7 @@ def create_user():
 		password = request.form["password"]
 		password2 = request.form["password2"]
 		
+		# Validate if username is valid
 		if not username:
 			errors.append({
 				"error": "user or password invalid",
@@ -64,7 +70,20 @@ def create_user():
 				}
 			})
 			return render_template("signup.html", errors=errors)
-
+		
+		# Check if the user is not duplicate
+		user_exist = bool(db.users.find_one({"username": username}))
+		if user_exist:
+			errors.append({
+				"error": "user already exist",
+				"data": {
+					"username": username,
+					"password": password
+				}
+			})
+			return render_template("signup.html", errors=errors)
+		
+		# Match passwords
 		if not password == password2:
 			errors.append({
 				"error": "password doesn't match",
@@ -83,4 +102,8 @@ def create_user():
 		}
 
 		user_collection.insert_one(user)
-		return redirect("/")
+		
+		# cookie
+		resp = make_response(render_template("index.html"))
+		resp.set_cookie("username", username)
+		return resp

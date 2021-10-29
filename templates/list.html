@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
-	<h1>Friend list</h1>
+	{% if username %}
+		<h1>Friend list of {{username}}</h1>
+	{% endif %}
 	<form class="form" method="post" action="/list">
 		<h2>Add a friend</h2>
 		<label>
