@@ -1,5 +1,35 @@
 {% extends "layout.html" %}
 {% block body %}
+	{% if errors %}
+		{% for error in errors%}
+			<div class="card-error-message">
+				{{error.error}}
+			</div>
+			<form method="POST" class="form">
+				<label>				
+					<input type="text" name="username" id="username" 
+						placeholder="username" value="{{error.data.username}}"
+					/>
+				</label>
+				<label>
+					<input type="password" name="password" id="password" 
+						placeholder="password" value="{{error.data.password}}"
+					/>
+				</label>
+				<label>
+					<input type="password" name="password2" id="password2" 
+						placeholder="repeat password"
+					/>
+				</label>
+				<button 
+					class="btn btn-primary" 
+					type="submit"
+				>
+					Sign Up
+				</button>
+			</form>
+		{% endfor %}
+	{% else %}
 	<form method="POST" class="form">
 		<label>				
 			<input type="text" name="username" id="username" 
@@ -23,4 +53,5 @@
 			Sign Up
 		</button>
 	</form>
+	{% endif %}
 {% endblock %}

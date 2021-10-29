@@ -7,7 +7,9 @@
 }
 
 .light {
+	--danger: #FF5DA2;
 	--text-color: var(--dark);
+	--text-color-2: var(--white);
 	--background-color: var(--white);
 	--background-card-form: var(--gray);
 	--row-dark: var(--dark-gray);
@@ -72,6 +74,20 @@ h2, p {
 	background-color: var(--background-color);
 }
 
+.card-error-message {
+	background-color: var(--danger);
+	width: 90%;
+	height: 32px;
+	margin: 2rem auto;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-transform: uppercase;
+	border-radius: 8px;
+	color: var(--text-color-2);
+}
+
 .form {
 	background-color: var(--background-card-form);
 	padding: 8px;
@@ -126,7 +142,7 @@ h2, p {
 		width: 600px;
 	}
 	
-	.form {
+	.form, .friend-table {
 		width: 600px;
 	}
 }

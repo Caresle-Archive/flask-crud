@@ -49,11 +49,32 @@ def get_signup():
 
 @app.route("/signup", methods=["POST"])
 def create_user():
+	errors = []
 	if request.method == "POST":
 		username = request.form["username"]
 		password = request.form["password"]
 		password2 = request.form["password2"]
 		
+		if not username:
+			errors.append({
+				"error": "user or password invalid",
+				"data": {
+					"username": username,
+					"password": password
+				}
+			})
+			return render_template("signup.html", errors=errors)
+
+		if not password == password2:
+			errors.append({
+				"error": "password doesn't match",
+				"data": {
+					"username": username,
+					"password": password
+				}
+			})
+			return render_template("signup.html", errors=errors)
+
 		user_collection = db.users
 
 		user = {
