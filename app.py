@@ -17,6 +17,12 @@ def index():
 @app.route("/list", methods=["GET"])
 def get_list():
 	url_for("static", filename="style.css")
+	friend_list = db.friend_list
+	friends_number = friend_list.count()
+	if friends_number > 0:
+		friends = list(friend_list.find({}))
+		print(friends)
+		return render_template("list.html", friends=friends)
 	return render_template("list.html")
 
 

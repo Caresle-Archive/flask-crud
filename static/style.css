@@ -10,6 +10,10 @@
 	--text-color: var(--dark);
 	--background-color: var(--white);
 	--background-card-form: var(--gray);
+	--row-dark: var(--dark-gray);
+	--row-light: var(--white);
+	--row-dark-text: var(--white);
+	--row-light-text: var(--dark);
 }
 
 .dark {
@@ -91,6 +95,29 @@ h2, p {
 	width: 100%;
 	margin: .5rem auto;
 	font-size: 1rem;
+}
+
+.friend-table {
+	background-color: var(--background-card-form);
+	margin-top: 1rem;
+	padding: 4px;
+	width: 90%;
+}
+
+.tr-light {
+	background-color: var(--row-light);
+}
+
+.tr-light, .tr-light a {
+	color: var(--row-light-text)
+}
+
+.tr-dark {
+	background-color: var(--row-dark);
+}
+
+.tr-dark, .tr-dark a {
+	color: var(--row-dark-text);
 }
 
 @media only screen and (min-width: 1024px) {

@@ -17,4 +17,22 @@
 		</label>
 		<button class="btn btn-primary" type="submit">Add</button>
 	</form>
+	{% if friends %}
+	<table class="friend-table">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Social link</th>
+			</tr>
+			<tbody>		
+					{% for friend in friends %}
+					<tr class="tr-light">
+						<td>{{friend.friend_name}}</td>
+						<td>{{friend.social_link}}</td>
+					</tr>
+					{% endfor %}
+			</tbody>
+		</thead>
+	</table>
+	{% endif %}
 {% endblock %}
