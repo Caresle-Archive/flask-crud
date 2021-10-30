@@ -26,13 +26,28 @@
 				<tr>
 					<th>Name</th>
 					<th>Social link</th>
+					<th></th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>		
 				{% for friend in friends %}
 				<tr class="table-secondary">
+					
 					<td>{{friend.friend_name}}</td>
 					<td>{{friend.social_link}}</td>
+					<td>
+						<button class="btn btn-primary btn-edit">
+							<a class="text-white" href="/list/edit/{{friend._id}}">
+								Edit
+							</a>
+						</button>
+					</td>
+					<td>
+						<form action="/list/delete/{{friend._id}}" method="post">
+							<button type="submit" class="btn btn-danger">Delete</button>
+						</form>
+					</td>
 				</tr>
 				{% endfor %}
 			</tbody>

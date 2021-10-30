@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+	<div class="container col-md-6 mt-5">
+		<form action="/list/edit/{{friend._id}}" method="post" class="card">
+			<div class="card-body d-flex flex-column">
+				<input type="text" name="friendName" id="friendName" 
+				class="form-control" value="{{friend.friend_name}}"
+				/>
+				<input type="url" name="socialLink" id="socialLink" 
+				class="form-control" value="{{friend.social_link}}"
+				/>
+				<button class="btn btn-primary" type="submit">Edit</button>
+			</div>
+		</form>
+	</div>
+{% endblock %}

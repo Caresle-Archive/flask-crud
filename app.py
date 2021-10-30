@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, make_response
 from werkzeug.utils import redirect
 from pymongo import MongoClient
+from bson import ObjectId
 
 client = MongoClient()
 db = client["flask-crud"]
@@ -31,6 +32,43 @@ def get_list():
 			"list.html", friends=friends, username=username
 			)
 	return render_template("list.html", username=username)
+
+
+@app.route("/list/edit/<id>", methods=["GET"])
+def edit_friend(id):
+	friend_list = db.friend_list
+	friend = dict(friend_list.find_one({"_id": ObjectId(id)}))
+
+	return render_template("/edit_form.html", friend=friend)
+
+
+@app.route("/list/edit/<id>", methods=["POST"])
+def update_friend(id):
+	friend_list = db.friend_list
+	friend_name = request.form["friendName"]
+	social_link = request.form["socialLink"]
+
+	if not friend_name == '' and not social_link == '':
+		friend_list.find_one_and_update({"_id": ObjectId(id)}, {"$set": {
+			"friend_name": friend_name,
+			"social_link": social_link
+		}})
+	elif not friend_name == '' and social_link == '':
+		friend_list.find_one_and_update({"_id": ObjectId(id)}, {"$set":{
+			"friend_name": friend_name
+		}})
+	elif not social_link == '' and friend_name == '':
+		friend_list.find_one_and_update({"_id": ObjectId(id)}, {"$set":{
+			"social_link": social_link
+		}})
+	return redirect("/list")
+
+
+@app.route("/list/delete/<id>", methods=["POST"])
+def delete_friend(id):
+	friend_list = db.friend_list
+	friend_list.find_one_and_delete({"_id": ObjectId(id)})
+	return redirect("/list")
 
 
 @app.route("/list", methods=["POST"])
