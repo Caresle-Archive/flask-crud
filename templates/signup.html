@@ -2,56 +2,52 @@
 {% block body %}
 	{% if errors %}
 		{% for error in errors%}
-			<div class="card-error-message">
+			<div class="alert alert-danger">
 				{{error.error}}
 			</div>
-			<form method="POST" class="form">
-				<label>				
-					<input type="text" name="username" id="username" 
+			<form method="POST" class="card">
+				<h3 class="card-title text-center mt-2">Sign up</h3>
+				<div class="card-body d-flex flex-column justify-content-center">
+					<input class="form-control mb-3" type="text" name="username" id="username" 
 						placeholder="username" value="{{error.data.username}}"
 					/>
-				</label>
-				<label>
-					<input type="password" name="password" id="password" 
-						placeholder="password" value="{{error.data.password}}"
+					<input class="form-control mb-3" type="password" name="password" id="password" 
+						placeholder="password mb-3" value="{{error.data.password}}"
 					/>
-				</label>
-				<label>
-					<input type="password" name="password2" id="password2" 
+					<input class="form-control mb-3" type="password" name="password2" id="password2" 
 						placeholder="repeat password"
 					/>
-				</label>
+					<button 
+						class="btn btn-primary" 
+						type="submit"
+						>
+						Sign Up
+					</button>
+				</div>
+			</form>
+		{% endfor %}
+	{% else %}
+	<div class="container mt-4 col-md-6">
+		<form method="POST" class="card">
+			<h3 class="card-title text-center mt-2">Sign up</h3>
+			<div class="card-body d-flex flex-column justify-content-center">
+				<input class="form-control mb-3" type="text" name="username" id="username" 
+					placeholder="username"
+				/>
+				<input class="form-control mb-3" type="password" name="password" id="password" 
+					placeholder="password"
+				/>
+				<input class="form-control mb-3" type="password" name="password2" id="password2" 
+					placeholder="repeat password"
+				/>
 				<button 
 					class="btn btn-primary" 
 					type="submit"
 				>
 					Sign Up
 				</button>
-			</form>
-		{% endfor %}
-	{% else %}
-	<form method="POST" class="form">
-		<label>				
-			<input type="text" name="username" id="username" 
-				placeholder="username"
-			/>
-		</label>
-		<label>
-			<input type="password" name="password" id="password" 
-				placeholder="password"
-			/>
-		</label>
-		<label>
-			<input type="password" name="password2" id="password2" 
-				placeholder="repeat password"
-			/>
-		</label>
-		<button 
-			class="btn btn-primary" 
-			type="submit"
-		>
-			Sign Up
-		</button>
-	</form>
+			</div>
+		</form>
+	</div>
 	{% endif %}
 {% endblock %}

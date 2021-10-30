@@ -10,21 +10,20 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-	url_for("static", filename="style.css")
 	return render_template("index.html")
 
 
 @app.route("/list", methods=["GET"])
 def get_list():
-	url_for("static", filename="style.css")
-	
 	username = request.cookies.get("username")
-	
+	# if not username:
+	# 	return redirect("/signup")
+
 	friend_list = db.friend_list
 	friends_number = friend_list.count()
 	
 	if friends_number > 0:
-		friends = list(friend_list.find({}))
+		friends = list(friend_list.find({"username": username}))
 		return render_template(
 			"list.html", friends=friends, username=username
 			)
@@ -34,21 +33,23 @@ def get_list():
 @app.route("/list", methods=["POST"])
 def create_friend():
 	if request.method == "POST":
+		username = request.cookies.get("username")
 		friend_name = request.form["friendName"]
 		social_link = request.form["socialLink"]
+		# Create a new friend
 		if not friend_name == '' and not social_link == '':
 			friend_list = db.friend_list
 			data = {
 				"friend_name": friend_name,
-				"social_link": social_link
+				"social_link": social_link,
+				"username": username
 			}
 			friend_list.insert_one(data)
-		return redirect("/")
+		return redirect("/list")
 
 
 @app.route("/signup", methods=["GET"])
 def get_signup():
-	url_for("static", filename="style.css")
 	return render_template("signup.html")
 
 
@@ -107,3 +108,8 @@ def create_user():
 		resp = make_response(render_template("index.html"))
 		resp.set_cookie("username", username)
 		return resp
+
+
+@app.route("/signin", methods=["GET"])
+def signin_user():
+	return render_template("signin.html")

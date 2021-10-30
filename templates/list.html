@@ -3,38 +3,40 @@
 	{% if username %}
 		<h1>Friend list of {{username}}</h1>
 	{% endif %}
-	<form class="form" method="post" action="/list">
-		<h2>Add a friend</h2>
-		<label>
-			<input type="text" 
-				name="friendName" id="friendName"
-				placeholder="Friend name"
-			/>
-		</label>
-		<label>
-			<input type="url" 
-				name="socialLink" id="socialLink"
-				placeholder="Social link"	
-			/>
-		</label>
-		<button class="btn btn-primary" type="submit">Add</button>
-	</form>
+	<div class="container col-md-6 mt-5">
+			<form class="card" method="post" action="/list">
+			<h2 class="text-center">Add a friend</h2>
+			<div class="card-body d-flex flex-column">
+				<input class="form-control mb-3" type="text" 
+					name="friendName" id="friendName"
+					placeholder="Friend name"
+				/>
+				<input class="form-control mb-3" type="url" 
+					name="socialLink" id="socialLink"
+					placeholder="Social link"	
+				/>
+				<button class="btn btn-primary" type="submit">Add</button>
+			</div>
+		</form>
+	</div>
 	{% if friends %}
-	<table class="friend-table">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Social link</th>
-			</tr>
+	<div class="container col-md-6">
+		<table class="table mt-4 table-dark ">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Social link</th>
+				</tr>
+			</thead>
 			<tbody>		
-					{% for friend in friends %}
-					<tr class="tr-light">
-						<td>{{friend.friend_name}}</td>
-						<td>{{friend.social_link}}</td>
-					</tr>
-					{% endfor %}
+				{% for friend in friends %}
+				<tr class="table-secondary">
+					<td>{{friend.friend_name}}</td>
+					<td>{{friend.social_link}}</td>
+				</tr>
+				{% endfor %}
 			</tbody>
-		</thead>
-	</table>
+		</table>
+	</div>
 	{% endif %}
 {% endblock %}
