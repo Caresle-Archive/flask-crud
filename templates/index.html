@@ -1,40 +1,48 @@
 {% extends "layout.html" %}
 {% block body %}
-	<h1>My best friends</h1>
-	<p>
-		Create a list of your best friends and all of their
-		social media
+<div class="container col-md-6 card mt-4">
+	<h1 class="text-center">My best friends</h1>
+	<div class="card-body d-flex flex-column align-items-center">
+		<p>
+			Create a list of your best friends and all of their
+			social media
+		</p>
+		<div>
+			<button class="btn btn-primary">
+				<a href="signup" class="text-light">
+					Getting started
+				</a>
+			</button>
+			<button class="btn btn-outline-primary m-2">
+				<a href="#learnMore" class="text-light">
+					Learn more
+				</a>
+			</button>
+		</div>
+	</div>
+</div>
+<section id="learnMore" class="container col-md-6 card mt-4">
+	<h2 class="text-center">About</h2>
+	<p class="text-center">
+		This is a project to manage the social info
+		about your best friends. No matter if you lose
+		your phone, or change your number.
 	</p>
-	<button class="btn btn-primary">
-		<a href="signup" class="text-light">
-			Getting started
-		</a>
-	</button>
-	<button class="btn btn-outline-primary">
-		<a href="#learnMore" class="text-light">
-			Learn more
-		</a>
-	</button>
-	<section id="learnMore">
-		<h2>About</h2>
-		<p>
-			This is a project to manage the social info
-			about your best friends. No matter if you lose
-			your phone, or change your number.
-		</p>
-		<p>
-			With one click you will have all of the data
-			about your friends
-		</p>
+	<p class="text-center">
+		With one click you will have all of the data
+		about your friends
+	</p>
+	<div class="card-body d-flex justify-content-center">
 		<button class="btn btn-primary">
 			<a href="signup" class="text-light">
 				Getting started
 			</a>
 		</button>
-		<button class="btn btn-primary">
+		<button class="btn btn-primary ms-4">
 			<a href="signin" class="text-light">
 				Sign in
 			</a>
 		</button>
-	</section>
+	</div>
+</section>
 {% endblock %}

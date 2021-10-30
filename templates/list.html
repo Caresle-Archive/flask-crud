@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
 	{% if username %}
-		<h1>Friend list of {{username}}</h1>
+		<h1 class="text-center">Friend list of {{username}}</h1>
 	{% endif %}
 	<div class="container col-md-6 mt-5">
 			<form class="card" method="post" action="/list">

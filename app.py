@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, make_response
+from flask import Flask, render_template, request, make_response
 from werkzeug.utils import redirect
 from pymongo import MongoClient
 
@@ -10,14 +10,17 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-	return render_template("index.html")
+	username = request.cookies.get("username")
+	if not username:
+		return render_template("index.html")
+	return render_template("index.html", username=username)
 
 
 @app.route("/list", methods=["GET"])
 def get_list():
 	username = request.cookies.get("username")
-	# if not username:
-	# 	return redirect("/signup")
+	if not username:
+		return redirect("/signup")
 
 	friend_list = db.friend_list
 	friends_number = friend_list.count()
@@ -105,11 +108,49 @@ def create_user():
 		user_collection.insert_one(user)
 		
 		# cookie
-		resp = make_response(render_template("index.html"))
+		resp = make_response(redirect("/"))
 		resp.set_cookie("username", username)
 		return resp
 
 
 @app.route("/signin", methods=["GET"])
-def signin_user():
+def signin_user_view():
 	return render_template("signin.html")
+
+
+@app.route("/signin", methods=["POST"])
+def signin_user():
+	username = request.form["username"]
+	password = request.form["password"]
+	errors = []
+	if not username:
+		errors.append({
+			"error": "User or password field cannot be empty",
+			"data": {
+				"username": username,
+				"password": password
+			}
+		})
+		return render_template("signin.html", errors=errors)
+
+	users = db.users
+	user = dict(users.find_one({"username": username}))
+	if not password == user["password"]:
+		errors.append({
+			"error": "User or password invalid",
+			"data": {
+				"username": username,
+				"password": password
+			}
+		})
+		return render_template("signin.html", errors=errors)
+	resp = make_response(redirect("/"))
+	resp.set_cookie("username", username)
+	return resp
+
+
+@app.route("/logout")
+def logout():
+	resp = make_response(redirect("/"))
+	resp.delete_cookie("username")
+	return resp
